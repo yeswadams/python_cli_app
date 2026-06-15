@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "198f904cd8ec49da8176ca95d76e96b851887f729816bff095edc7aebdb54bd8"
+            "sha256": "33e21261949e235eb9f6bf6c806fcc52ee0b79ddd24701a7c16c65b82c7aaff9"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.12"
+            "python_version": "3.14.5"
         },
         "sources": [
             {
@@ -17,6 +17,14 @@
     },
     "default": {},
     "develop": {
+        "colorama": {
+            "hashes": [
+                "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44",
+                "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6'",
+            "version": "==0.4.6"
+        },
         "iniconfig": {
             "hashes": [
                 "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730",

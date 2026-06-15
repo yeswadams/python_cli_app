@@ -2,7 +2,7 @@
 import pytest
 from models.game import Game
 from models.score_manager import ScoreManager
-from models.user import UserManager
+from models.login import UserManager
 
 # ---Game Test ---
 def test_game_initialization():
@@ -22,7 +22,7 @@ def test_check_guess_too_low(capsys):
 
 def test_check_guess_correct(capsys):
     game = Game("Tester")
-    game.secrets_number = 42
+    game.secret_number = 42
     result = game.check_guess(42)
     capture = capsys.readouterr()
     assert "Correct!" in capture.out
@@ -31,25 +31,25 @@ def test_check_guess_correct(capsys):
 def test_calculate_score():
     game = Game("Tester")
     game.secret_number = 10 
-    game.attempt = 3
+    game.attempts = 3
     score = game.calculate_score() 
     assert score == max(0, 100  -(3 - 1) * 10)
 
-def test_add_and_display_scores(tmp_path, caspys):
+def test_add_and_display_scores(tmp_path, capsys):
     score_file = tmp_path / "score.json"
-    manager = ScoreManager(score_file=str(score_file))    
+    manager = ScoreManager(scores_file=str(score_file))    
     manager.add_score("Alice", 90)
     manager.add_score("Bob", 80)
     manager.display_scores()
-    captured = caspys.readouterr()
+    captured = capsys.readouterr()
     assert "Alice" in captured.out
     assert "Bob" in captured.out
 
 def test_register_and_login_user(tmp_path):
     user_file = tmp_path / "users.json" 
-    manager = UserManager(user_file=str(user_file))
+    manager = UserManager(users_file=str(user_file))
     user = manager.register_user("Alice", "alice@example.com", "password123")
     assert user is not None
     logged_in = manager.login_user("alice@example.com", "password123")
     assert logged_in is not None
-    assert logged_in.name == "Alice"
+    assert logged_in.username == "Alice"

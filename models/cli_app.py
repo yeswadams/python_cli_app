@@ -1,6 +1,6 @@
 from models.game import Game
 from models.score_manager import ScoreManager
-from models.user import UserManager
+from models.login import UserManager
 
 class CLIApp:
     def __init__(self):
@@ -33,14 +33,14 @@ class CLIApp:
                 if not self.current_user:
                     print("You must log in first!")
                     continue
-                game = Game(self.current_user.name)
+                game = Game(self.current_user.username)
                 game.start_game()
                 while game.attempts < game.max_attempts:
                     guess = game.get_guess()
                     if game.check_guess(guess):
                         score = game.calculate_score()
                         print(f"You won! Score: {score}")
-                        self.score_manager.add_score(self.current_user.name, score)
+                        self.score_manager.add_score(self.current_user.username, score)
                         break
                 else:
                     print(f"Game Over! The number was {game.secret_number}")

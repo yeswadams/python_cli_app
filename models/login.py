@@ -50,7 +50,7 @@ class UserManager:
     
     def login_user(self, email, password):
         for user in self.users:
-            if user["email"] == email and user["password"] == password:
+            if user["email"] == email and user["password"] == self.hash_password(password):
                 print(f"Welcome back, {user['username']}!")
                 return User(user["username"], user["email"], user["password"])
         print("Invalid email or password")
