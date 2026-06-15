@@ -1,6 +1,7 @@
 from models.game import Game
 from models.score_manager import ScoreManager
 from models.login import UserManager
+import re
 
 class CLIApp:
     def __init__(self):
@@ -22,7 +23,13 @@ class CLIApp:
             choice = input("Enter choice: ")
             if choice == "1":
                 name = input("Enter your name: ")
+                if not re.match(r'^[a-zA-Z0-9]+$', name):
+                    print("Invalid username. Please use only letters and numbers.")
+                    continue
                 email = input("Enter your email: ")
+                if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+                    print("Invalid email format. Please use a valid email address.")
+                    continue
                 password = input("Enter a password: ")
                 self.user_manager.register_user(name, email, password)
             elif choice == "2":
