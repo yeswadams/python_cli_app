@@ -1,12 +1,9 @@
-from utils.storage import load_users, save_users
-from utils.cli import login_screen, register_screen
+from models.cli_app import CLIApp
 
 def main():
-    users = load_users()
-    users = login_screen(users)
-    
-    
-    
+    app = CLIApp()
+    app.run()
+
 if __name__ == "__main__":
     main()
    

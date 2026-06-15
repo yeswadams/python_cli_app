@@ -10,8 +10,11 @@ class ScoreManager:
 
     def load_scores(self):
         if os.path.exists(self.scores_file):
-            with open(self.scores_file, "r") as f:
-                return json.load(f)
+            try:
+                with open(self.scores_file, "r") as f:
+                    return json.load(f)
+            except json.JSONDecodeError:
+                return []
         return []
     
     def save_scores(self):

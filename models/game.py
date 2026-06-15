@@ -13,7 +13,11 @@ class Game:
         print(f"Welcome {self.player_name}! Guess the number between 1 and 100.")
 
     def get_guess(self):
-        return int(input("Enter your guess: "))
+        while True:
+            try:
+                return int(input("Enter your guess: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer.")
 
     def check_guess(self, guess: int):
         self.attempts += 1
