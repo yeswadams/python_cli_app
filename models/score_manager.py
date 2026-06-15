@@ -4,8 +4,8 @@ import os
 
 class ScoreManager:
     def __init__(self, score_file="data\scores.json", max_sceres=10):
-        self.scores_file = scores_file
-        self.max_scores = max_scores
+        self.scores_file = score_file
+        self.max_scores = max_sceres
         self.score = self.load_scores()
 
     def load_scores(self):
