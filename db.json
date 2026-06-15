@@ -1,0 +1,24 @@
+[
+    "users": [
+        {
+            "username": "mark"
+            "email": "mark@example.com"
+            "password": "hashed_password_here"
+        }
+        {
+            "username": "razia"
+            "email": "razia@example.com"
+            "password": "hashed_password_here"
+        }
+        {
+            "username": "adams"
+            "email": "adams@example.com"
+            "password": "hashed_password_here"
+        }
+        {
+            "username": "duncan"
+            "email": "duncan@example.com"
+            "password": "hashed_password_here"
+        }
+    ]
+]
