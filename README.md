@@ -5,7 +5,8 @@ An object-oriented Command-Line Interface (CLI) Number Guessing Game built in Py
 ---
 
 ## Project Overview
-[text](https://www.youtube.com/watch?v=D2XtN7qDMEY)
+[text](https://www.youtube.com/watch?v=D2XtN7qDMEY) - short version
+[text](https://www.youtube.com/watch?v=D2XtN7qDMEY) - long version (youtube is yet to render this video)
 
 ## Key Developer Skill Sets Demonstrated
 
