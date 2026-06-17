@@ -4,6 +4,9 @@ An object-oriented Command-Line Interface (CLI) Number Guessing Game built in Py
 
 ---
 
+## Project Overview
+[text](https://www.youtube.com/watch?v=D2XtN7qDMEY)
+
 ## Key Developer Skill Sets Demonstrated
 
 ### 1. Clean Architecture & Object-Oriented Design (OOP)

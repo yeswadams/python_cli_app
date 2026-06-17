@@ -11,7 +11,7 @@ def build_parser():
     parser = argparse.ArgumentParser(
         description="Secure CLI number guessing game with user accounts and high scores."
     )
-    subparsers = parser.add_subparsers(dest="command")
+    subparsers = parser.add_subparsers(dest="command") # --help
 
     register_parser = subparsers.add_parser("register", help="Create a user account")
     register_parser.add_argument("--username", required=True, help="Letters and numbers only")
@@ -53,7 +53,7 @@ def run_command(args):
             print("Invalid username. Please use only letters and numbers.")
             return 1
         game = Game(args.username, max_attempts=args.max_attempts)
-        score_manager = ScoreManager()
+        score_manager = ScoreManager() # closure
         game.start_game()
         while game.has_attempts_remaining():
             guess = game.get_guess()
@@ -65,7 +65,7 @@ def run_command(args):
         print(f"Game Over! The number was {game.secret_number}")
         return 0
 
-    app = CLIApp()
+    app = CLIApp() 
     app.run()
     return 0
 
