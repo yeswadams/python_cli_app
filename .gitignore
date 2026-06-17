@@ -1,1 +1,7 @@
-.mypy_cache
+.mypy_cache/
+.pytest_cache/
+.venv/
+.vscode/
+__pycache__/
+*.py[cod]
+data/*.tmp

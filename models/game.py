@@ -1,12 +1,20 @@
-# game.py
 import random
 
-class Game:
-    def __init__(self, player_name: str, max_attempts: int=10):
+
+class BaseGame:
+    def __init__(self, player_name: str, max_attempts: int = 10):
         self.player_name = player_name
-        self.secret_number = random.randint(1, 100)
         self.attempts = 0
         self.max_attempts = max_attempts
+
+    def has_attempts_remaining(self):
+        return self.attempts < self.max_attempts
+
+
+class Game(BaseGame):
+    def __init__(self, player_name: str, max_attempts: int = 10):
+        super().__init__(player_name, max_attempts)
+        self.secret_number = random.randint(1, 100)
         self.score = 0
 
     def start_game(self):
