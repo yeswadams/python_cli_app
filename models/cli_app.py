@@ -1,7 +1,8 @@
 from models.game import Game
 from models.score_manager import ScoreManager
 from models.login import UserManager
-import re
+from utils.cli import print_main_menu
+from utils.helpers import is_valid_email, is_valid_username
 
 class CLIApp:
     def __init__(self):
@@ -10,12 +11,7 @@ class CLIApp:
         self.current_user = None
 
     def show_menu(self):
-        print("\n--- Main Menu ---")
-        print("1. Register")
-        print("2. Login")
-        print("3. Play Game")
-        print("4. View High Scores")
-        print("5. Exit")
+        print_main_menu()
 
     def run(self):
         while True:
@@ -23,11 +19,11 @@ class CLIApp:
             choice = input("Enter choice: ")
             if choice == "1":
                 name = input("Enter your name: ")
-                if not re.match(r'^[a-zA-Z0-9]+$', name):
+                if not is_valid_username(name):
                     print("Invalid username. Please use only letters and numbers.")
                     continue
                 email = input("Enter your email: ")
-                if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+                if not is_valid_email(email):
                     print("Invalid email format. Please use a valid email address.")
                     continue
                 password = input("Enter a password: ")
@@ -42,7 +38,7 @@ class CLIApp:
                     continue
                 game = Game(self.current_user.username)
                 game.start_game()
-                while game.attempts < game.max_attempts:
+                while game.has_attempts_remaining():
                     guess = game.get_guess()
                     if game.check_guess(guess):
                         score = game.calculate_score()

@@ -1,11 +1,16 @@
-import json
-import os 
 import hashlib
+from utils.storage import load_json_list, save_json_list
 
-class User:
-    def __init__(self, username, email, password_hash):
+
+class Account:
+    def __init__(self, username, email):
         self.username = username
         self.email = email
+
+
+class User(Account):
+    def __init__(self, username, email, password_hash):
+        super().__init__(username, email)
         self.password_hash = password_hash
         
     def to_dict(self):
@@ -21,22 +26,14 @@ class UserManager:
         self.users = self.load_users()
         
     def load_users(self):
-        if os.path.exists(self.users_file):
-            try:
-                with open(self.users_file, 'r') as f:
-                    return json.load(f)
-            except json.decoder.JSONDecodeError:
-                return []
-        else:
-            return []
+        return load_json_list(self.users_file)
         
     def add_user(self, user):
         self.users.append(user.to_dict())
         self.save_users()
                            
     def save_users(self):
-        with open(self.users_file, 'w') as f:
-            json.dump(self.users, f, indent=4)
+        save_json_list(self.users_file, self.users)
         
     def register_user(self, username, email, password):
         if any(user["email"] == email for user in self.users):

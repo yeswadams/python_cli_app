@@ -1,6 +1,6 @@
 # Secure CLI Number Guessing Game
 
-An object-oriented Command-Line Interface (CLI) Number Guessing Game built in Python. This project demonstrates clean architecture, database persistence, secure user authentication, error resilience, and automated testing using pytest. It is designed to showcase professional software engineering standards.
+An object-oriented Command-Line Interface (CLI) Number Guessing Game built in Python. This project demonstrates modular classes, JSON persistence, hashed user authentication, error resilience, argparse commands, and automated testing using pytest.
 
 ---
 
@@ -8,28 +8,29 @@ An object-oriented Command-Line Interface (CLI) Number Guessing Game built in Py
 
 ### 1. Clean Architecture & Object-Oriented Design (OOP)
 The project follows a strict separation of concerns, avoiding bloated modules. It is structured logically into reusable components:
-*   **Controller (`CLIApp`):** Manages the application lifecycle, menu options, user input loops, and state-machine transitions.
+*   **Controller (`CLIApp`):** Manages the interactive menu, user input loops, and login state.
 *   **Domain Models (`Game`, `User`):** Contain pure business logic (attempts calculations, score algorithms, and game initialization).
 *   **Infrastructure/Managers (`UserManager`, `ScoreManager`):** Interface with external files, managing data serialization, persistence, sorting, and user records.
+*   **Utilities (`utils`):** Share validation, menu display, and JSON storage helpers across the app.
 
 ### 2. Cryptographic Security Best Practices
 *   **Password Hashing:** User passwords are never stored in plaintext. The project implements SHA-256 hashing using Python's `hashlib` to securely hash and verify credentials upon registration and login.
 *   **State Isolation:** Ensures session safety by maintaining login states (`self.current_user`) only for authenticated execution periods.
 
 ### 3. Resilience and Error Handling
-Designed to be crash-proof against typical terminal-based failures:
 *   **Input Validation:** Graces user typos (e.g., entering letters instead of integers when guessing a number) by trapping `ValueError` and prompting the user to try again rather than crashing the system.
 *   **Fault-Tolerant Persistence:** Mitigates corruption of JSON files (e.g., empty or malformed database files) by implementing custom exception recovery (`json.JSONDecodeError`), falling back safely to empty datasets.
+*   **Directory Creation:** Creates parent folders for JSON files when saving to a new path.
 
 ### 4. Quality Assurance and Testing (CI/CD Ready)
-*   Equipped with a comprehensive unit-testing suite using `pytest` to validate core components like:
+*   Equipped with a focused unit-testing suite using `pytest` to validate core components like:
     *   Authentication and session state management.
     *   Game state initialization and mathematical score decay.
     *   Leaderboard sorting and multi-score tracking.
 *   Utilizes `tmp_path` fixture for environment-isolated database state testing, preventing production filesystem pollution.
 
 ### 5. Professional Dependency Management
-*   Uses `Pipenv` to manage virtual environment isolation, package locking, and dev-vs-production dependencies (`Pipfile` & `Pipfile.lock`).
+*   Uses `Pipenv` to manage virtual environment isolation, package locking, and dev dependencies (`Pipfile` & `Pipfile.lock`).
 
 ---
 
@@ -49,7 +50,9 @@ cli_app/
 │   └── score_manager.py        # Leaderboard storage, saving, & display
 │
 ├── utils/                      # Helper modules and scripts
-│   └── helpers.py              # Auxiliary utility hooks
+│   ├── cli.py                  # Shared interactive menu display
+│   ├── helpers.py              # Username and email validation helpers
+│   └── storage.py              # JSON load/save helpers
 │
 ├── tests/                      # Automated test suite
 │   └── test_game.py            # Unit tests for user, game, and score components
@@ -76,12 +79,17 @@ cli_app/
     cd cli_app
     ```
 
-2.  **Initialize the virtual environment & install dependencies (including developer tools):**
+2.  **Install dependencies with requirements.txt:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+    Or initialize the Pipenv environment:
     ```bash
     pipenv install --dev
     ```
 
-3.  **Activate the Pipenv virtual environment shell:**
+3.  **Activate the Pipenv virtual environment shell if using Pipenv:**
     ```bash
     pipenv shell
     ```
@@ -95,6 +103,15 @@ To launch the interactive CLI application:
 pipenv run python main.py
 ```
 
+To use argparse subcommands:
+```bash
+pipenv run python main.py --help
+pipenv run python main.py register --username Alice --email alice@example.com --password password123
+pipenv run python main.py login --email alice@example.com --password password123
+pipenv run python main.py scores
+pipenv run python main.py play --username Alice
+```
+
 ### Flow Options:
 1.  **Register:** Enter username, email, and password (hashed with SHA-256 and saved to `data/users.json`).
 2.  **Login:** Enter registered credentials to verify details and begin an authenticated session.
@@ -106,9 +123,14 @@ pipenv run python main.py
 
 ## Testing
 
-The test suite validates both success paths and edge cases (such as incorrect password checking, empty JSON database files, and invalid guesses).
+The test suite validates both success paths and edge cases, such as incorrect password checking, malformed JSON files, folder creation during persistence, validation helpers, sorted high scores, and invalid guesses.
 
 To run all unit tests:
+```bash
+python -m pytest
+```
+
+With Pipenv:
 ```bash
 pipenv run python -m pytest
 ```
